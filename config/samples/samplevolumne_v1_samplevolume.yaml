@@ -1,0 +1,7 @@
+apiVersion: samplevolumne.operator.yogeshsharma.me/v1
+kind: SampleVolume
+metadata:
+  name: samplevolume-sample
+spec:
+  name: demo-volume
+  size: 1

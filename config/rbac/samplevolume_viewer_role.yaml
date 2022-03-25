@@ -1,0 +1,20 @@
+# permissions for end users to view samplevolumes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: samplevolume-viewer-role
+rules:
+- apiGroups:
+  - samplevolumne.operator.yogeshsharma.me
+  resources:
+  - samplevolumes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - samplevolumne.operator.yogeshsharma.me
+  resources:
+  - samplevolumes/status
+  verbs:
+  - get
