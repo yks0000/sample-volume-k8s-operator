@@ -1,15 +1,26 @@
-## Create a PVC with CRD.
+## Create a Controller using Kubebuilder
 
+Controller enable us to create a resource with `Kind: SampleVolume` which in turn create a PVC.
 
-1. Crate scaffolding
+1. Reconcile
+2. SetControllerReference for OwnerReference
 
+## Steps
+
+1. Create scaffolding
+
+```bash
 kubebuilder init --domain operator.yogeshsharma.me --repo demo-volume
+```
 
 2. Create API/Custom Resources
 
+```bash
 kubebuilder create api --group samplevolumne --version v1 --kind SampleVolume
+```
 
-3. Update api/v1/samplevolume_types.go and execute make commands
+
+3. Update `api/v1/samplevolume_types.go` and execute make commands
 
 ```go
 type SampleVolumeSpec struct {
@@ -57,7 +68,6 @@ $ k8 apply -f config/samples/samplevolumne_v1_samplevolume.yaml
 samplevolume.samplevolumne.operator.yogeshsharma.me/samplevolume-sample created
 ```
 
-
 Check status
 
 ```bash
@@ -70,5 +80,7 @@ samplevolume-sample   56s
 
 7. To run in cluster
 
+```bash
 make docker-build docker-push IMG=yks0000/sample-volume-k8s-operator:0.1
 make deploy IMG=yks0000/sample-volume-k8s-operator:0.1
+```
