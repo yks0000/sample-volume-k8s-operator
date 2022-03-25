@@ -84,3 +84,26 @@ samplevolume-sample   56s
 make docker-build docker-push IMG=yks0000/sample-volume-k8s-operator:0.1
 make deploy IMG=yks0000/sample-volume-k8s-operator:0.1
 ```
+
+
+8. For cluster Installation we need to have PVC RBAC so that service account can watch/update/create/delete PVC when SampleVolume event triggered.
+
+Files:
+
+```bash
+$ ll config/rbac/pvc_role*
+-rw-r--r--  1 yosharma  staff   662B Mar 25 11:03 config/rbac/pvc_role.yaml
+-rw-r--r--  1 yosharma  staff   280B Mar 25 11:04 config/rbac/pvc_role_binding.yaml
+```
+
+9. `SetControllerReference` for OwnerReference.
+
+This is used for garbage collection of the controlled object and for reconciling the owner object on changes to controlled (with a Watch + EnqueueRequestForOwner).
+
+```go
+logger.Info("Setting up pvc controller reference")
+if err = controllerutil.SetControllerReference(volume, pvc, r.Scheme); err != nil {
+    logger.Error(err, "Failed to set pvc controller reference")
+    return err
+	}
+```
